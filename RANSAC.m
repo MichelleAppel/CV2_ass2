@@ -39,7 +39,7 @@ if nargin < 9
     saveResults = false;
 end
 if nargin < 10
-    dist_threshold = 15;
+    dist_threshold = 5;
 end
 
 matches_im1 = T(1, :);
@@ -125,11 +125,11 @@ for n = 1:N
         inliers_im1 = f1(1:2, matches_im1);
         inliers_im1 = inliers_im1(:, distance < dist_threshold);
         inliers_im2 = OG_im2_feat_points(:, distance < dist_threshold);
-    end 
+    end
 
 end
 
-visualize_keypoints(image1, image2, inliers_im1, inliers_im2)
+%visualize_keypoints(image1, image2, inliers_im1, inliers_im2)
 
 % Transform the image using the best transformation matrix and method
 if strcmp(transformation, 'nearest') % nearest neighbour interpolation
@@ -165,7 +165,7 @@ function visualize_keypoints(image1, image2, f1, f2)
     visualizePoints = size(f1, 2);
     figure, imshowpair(image1, image2, 'montage') % init figure
     title('Matching features in both images')
-hold on
+    hold on
     vl_plotframe(f1);
     f2(1, :) = f2(1, :) + size(image1, 2); % 850 pixels to the right, because image2 is next to image1
     vl_plotframe(f2);
