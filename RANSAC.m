@@ -14,8 +14,8 @@ close ALL % close all figures
 
 % set default parameters
 if nargin == 0
-    image1 = imread('boat1.pgm');
-    image2 = imread('boat2.pgm');
+    image1 = imread('Data/House/frame00000001.png');
+    image2 = imread('Data/House/frame00000002.png');
 end
 if nargin < 3
     N = 10;
