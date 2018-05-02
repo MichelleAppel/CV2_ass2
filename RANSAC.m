@@ -1,5 +1,5 @@
 function [ best_transformation, inliers_im1, inliers_im2 ] = RANSAC(...
-    image1, image2, N, T, P, visualizeTemp, visualizeFinal, saveResults)
+    image1, image2, N, T, P, visualizeTemp, visualizeFinal, saveResults, dist_threshold)
 %RANSAC Finds the best transformation between two images.
 % Input parameters:
 %   image1, image2      Rgb or grayscale images.
@@ -37,6 +37,9 @@ if nargin < 8
 end
 if nargin < 9
     saveResults = false;
+end
+if nargin < 10
+    dist_threshold = 15;
 end
 
 matches_im1 = T(1, :);
@@ -113,14 +116,15 @@ for n = 1:N
     (trans_im1_feat_points(1, :) - OG_im2_feat_points(1, :)).^2 + ...
     (trans_im1_feat_points(2, :) - OG_im2_feat_points(2, :)).^2);
 
-    num_inliers = length(trans_im1_feat_points(:, distance < 10));
+    num_inliers = length(trans_im1_feat_points(:, distance < dist_threshold));
 
     if num_inliers > largest_num_inliers
         largest_num_inliers = num_inliers;
         best_transformation = x;
 
-        inliers_im1 = trans_im1_feat_points(:, distance < 10);
-        inliers_im2 = OG_im2_feat_points(:, distance < 10);
+        inliers_im1 = f1(1:2, matches_im1);
+        inliers_im1 = inliers_im1(:, distance < dist_threshold);
+        inliers_im2 = OG_im2_feat_points(:, distance < dist_threshold);
     end 
 
 end
