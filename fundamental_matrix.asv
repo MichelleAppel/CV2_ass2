@@ -77,12 +77,9 @@ F = reshape(F, 3, 3);
 [ U, D, V ] = svd(F);
 D(end, end) = 0;
 
-% Recreate F
-F = U * D * V.';
-
-% Denormalization
-if normalize
-    F = T1.' * F * T1;
+    F = U * D * V.';
 end
+
+
 
 end
