@@ -125,7 +125,7 @@ for n = 1:N
 
 end
 
-visualize_keypoints(image1, image2, inliers_im1, inliers_im2)
+visualize_keypoints(image1, image2, inliers_im1, inliers_im2, T)
 
 % Transform the image using the best transformation matrix and method
 if strcmp(transformation, 'nearest') % nearest neighbour interpolation
@@ -157,20 +157,38 @@ end
 
 end
 
-function visualize_keypoints(image1, image2, f1, f2)
-    visualizePoints = size(f1, 2);
+function visualize_keypoints(image1, image2, f1, f2, matches)
+    visualizePoints = 50;
     figure, imshowpair(image1, image2, 'montage') % init figure
     title('Matching features in both images')
-hold on
-    vl_plotframe(f1);
-    f2(1, :) = f2(1, :) + size(image1, 2); % 850 pixels to the right, because image2 is next to image1
-    vl_plotframe(f2);
+
+%     perm = randperm(size(matches, 2)); % shuffle indices randomly
+%     sel = perm(1:visualizePoints); % pick the first 50 (default) 
+
+    % Draw the interest poins for image1
+%     h1 = vl_plotframe(f1);
+%     h2 = vl_plotframe(f1);
+%     set(h1, 'color', 'k', 'linewidth', 3);
+%     set(h2, 'color', 'y', 'linewidth', 2);
+
+vl_plotframe(f1)
+
+    % Draw the interest poins for image2
+%     sel2 = matches(2, sel);
+%     f2(1, :) = f2(1, :) + size(image1, 2); % 850 pixels to the right, because image2 is next to image1
+%     h1 = vl_plotframe(f2);
+%     h2 = vl_plotframe(f2(:, sel2));
+%     set(h1, 'color', 'k', 'linewidth', 3);
+%     set(h2, 'color', 'y', 'linewidth', 2);
+
+f2(1, :) = f2(1, :) + size(image1, 2); % 850 pixels to the right, because image2 is next to image1
+vl_plotframe(f2)
     hold on
 
     % Draw lines between each pair of points
     for i = 1:visualizePoints 
-        x = [f1(1, i) f2(1, i)];
-        y = [f1(2, i) f2(2, i)];
+        x = [f1(1) f2(1)];
+        y = [f1(2, sel1(i)) f2(2, sel2(i))];
         line(x, y, 'Color', 'cyan', 'LineWidth', 1)
     end
 end

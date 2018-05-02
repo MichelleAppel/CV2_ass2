@@ -14,8 +14,7 @@ end
 
 [ ~, inliers_im1, inliers_im2 ] = RANSAC(im1, im2);
 
-disp(inliers_im1)
-disp(inliers_im2)
+disp(size(inliers_im1))
+disp(size(inliers_im2))
 
 end
-
