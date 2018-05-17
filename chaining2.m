@@ -1,6 +1,10 @@
-function [] = chaining2()
+function [] = chaining2(threshold)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
+clc
+if nargin < 1
+    threshold = 0.2
+end
 
 path = './Data/House/';
 file_names = get_file_names(path);
@@ -12,9 +16,10 @@ for file_no = 1:length(file_names)
     im2 = imread(file_names(file_no+1, :));
     
     [ inliers_im1, descriptors, ~, ~ ] = norm_8pt_alg(im1, im2);
+    
 
     if size(descriptors_dictionary, 1) > 0 
-        [ LIA, LOCB ] = ismembertol(double(descriptors).', double(descriptors_dictionary).', 0.05, 'ByRows', true);
+        [ LIA, LOCB ] = ismembertol(double(descriptors).', double(descriptors_dictionary).', threshold, 'ByRows', true);
        
         % Mathing points
         point_view_matrix(file_no*2-1:file_no*2, LOCB(LIA)) = inliers_im1(:, LIA.');
@@ -35,9 +40,12 @@ for file_no = 1:length(file_names)
         point_view_matrix = inliers_im1;
     end
     
-% point_view_matrix
-% size(point_view_matrix)
+    descriptors_dictionary(:, 192)
+    %disp(descriptors(192, :))
 
+    %disp(point_view_matrix)
+    % point_view_matrix
+    % size(point_view_matrix)
 end
     
 end
