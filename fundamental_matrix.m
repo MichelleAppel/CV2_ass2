@@ -1,4 +1,4 @@
-function [ F, inliers_im1, inliers_im2 ] = fundamental_matrix(im1, im2, normalize, n_samples)
+function [ F, all_inliers_im1, all_inliers_im2, desc1, desc2 ] = fundamental_matrix(im1, im2, normalize, n_samples)
 
 run('./vlfeat-0.9.21/toolbox/vl_setup')
 
@@ -14,12 +14,13 @@ end
 if nargin < 4
    n_samples = 8; 
 end
+
 % Get the matching points
-[ ~, inliers_im1, inliers_im2 ] = RANSAC(im1, im2);
-rndm = randperm(size(inliers_im1, 2));
+[ ~, all_inliers_im1, all_inliers_im2, desc1, desc2 ] = RANSAC(im1, im2);
+rndm = randperm(size(all_inliers_im1, 2));
 idx = rndm(1:n_samples);
-inliers_im1 = inliers_im1(:, idx);
-inliers_im2 = inliers_im2(:, idx);
+inliers_im1 = all_inliers_im1(:, idx);
+inliers_im2 = all_inliers_im2(:, idx);
 
 % Get the columns to create A
 x1 = inliers_im1(1, :)';

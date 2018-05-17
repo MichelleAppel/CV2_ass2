@@ -1,4 +1,4 @@
-function [ matches, f1, f2 ] = keypoint_matching(image1, image2, ...
+function [ matches, f1, f2, desc1, desc2 ] = keypoint_matching(image1, image2, ...
     visualizePoints, visualization)
 %KEYPOINT_MATCHING Find the keypoint matchings between two images.
 % Input arguments:
@@ -41,11 +41,13 @@ s_image2 = single(image2);
 
 % compute the SIFT frames (keypoints) and descriptors
 % see http://www.vlfeat.org/overview/sift.html
-[f1, d1] = vl_sift(s_image1);
-[f2, d2] = vl_sift(s_image2);
+[f1, desc1] = vl_sift(s_image1);
+[f2, desc2] = vl_sift(s_image2);
 
 % find matching features
-[matches, ~] = vl_ubcmatch(d1, d2);
+[matches, ~] = vl_ubcmatch(desc1, desc2);
+
+
 
 %%% Visualization %%%
 % Take a random subset (with set size set to 50) of all matching points, 
