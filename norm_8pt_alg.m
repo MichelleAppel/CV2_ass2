@@ -1,4 +1,4 @@
-function [ inliers_im1, desc1, max_inl, best_F ] = norm_8pt_alg(im1, im2, threshold, n_iter)
+function [ inliers_im1, inliers_im2, desc1, max_inl, best_F ] = norm_8pt_alg(im1, im2, threshold, n_iter)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -14,7 +14,7 @@ if nargin < 3
    threshold = 0.1;
 end
 if nargin < 4
-   n_iter = 1; 
+   n_iter = 25; 
 end
 normalize = true;
 

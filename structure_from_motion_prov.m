@@ -7,10 +7,10 @@ if nargin < 1
     point_view_matrix = load('PointViewMatrix.txt');
 end
 if nargin < 2
-    num_images_db = 4;
+    num_images_db = 3; %size(point_view_matrix, 1)/2-2;
 end
 if nargin < 3
-    max_images = 8; %size(point_view_matrix, 1)/2-num_images
+    max_images = size(point_view_matrix, 1)/2-num_images_db;
 end
 if nargin < 4
     aff_ambig_removal = false;
@@ -19,7 +19,7 @@ if nargin < 5
     visualize = true;
 end
 if nargin < 6
-    iter_visualize = true;
+    iter_visualize = false;
 end
 
 all_points = [];
