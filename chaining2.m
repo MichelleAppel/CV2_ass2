@@ -3,7 +3,7 @@ function [] = chaining2(threshold)
 %   Detailed explanation goes here
 clc
 if nargin < 1
-    threshold = 0.2
+    threshold = 0.1;
 end
 
 path = './Data/House/';
@@ -43,7 +43,7 @@ for file_no = 1:length(file_names)
         point_view_matrix = inliers_im1;
     end
     
-    % size(point_view_matrix)
+    disp(point_view_matrix)
 
     descriptors_dictionary(:, 192)
     %disp(descriptors(192, :))
